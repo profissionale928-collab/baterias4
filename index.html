@@ -348,37 +348,32 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 .fechar-modal:hover{color:#000}
 #itens-carrinho{margin-top:15px;max-height:300px;overflow-y:auto;border-bottom:1px solid #eee;padding-bottom:15px}
 .item-carrinho{
-	    display: flex;
-	    justify-content: space-between;
-	    align-items: center;
-	    padding: 15px 0; /* Aumenta o padding vertical */
-	    border-top: 1px solid #eee;
-	    position: relative;
-	    background-color: var(--branco); /* Fundo branco para destaque */
-	    border-radius: 5px; /* Bordas arredondadas */
-	    margin-bottom: 5px; /* Espaçamento entre itens */
-	    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Sombra suave */
-	}
-.item-carrinho span:nth-child(1) { flex: 3; margin-right: 15px; font-size: 1em; font-weight: 600; color: var(--azul-principal); min-width: 120px;}
-.item-carrinho span:nth-child(2) { flex: 0 0 40px; text-align: center; font-weight: 700; color: #333;}
-.item-carrinho strong { flex: 1; text-align: right; min-width: 60px; font-size: 1.1em; color: var(--vermelho-preco);}
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+    position: relative;
+}
+.item-carrinho span:nth-child(1) { flex: 3; margin-right: 15px; font-size: 0.95em; min-width: 120px;}
+.item-carrinho span:nth-child(2) { flex: 0 0 40px; text-align: center; font-weight: bold;}
+.item-carrinho strong { flex: 1; text-align: right; min-width: 60px;}
 .item-carrinho .btn-remover {
-	    background: none;
-	    border: none;
-	    color: #aaa;
-	    font-size: 1.2em;
-	    cursor: pointer;
-	    position: absolute;
-	    right: 10px; /* Ajusta a posição para dentro do item */
-	    top: 50%;
-	    transform: translateY(-50%);
-	    padding: 5px;
-	    line-height: 1;
-	    transition: color 0.2s;
-	}
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1.2em;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 5px;
+    line-height: 1;
+}
 .item-carrinho .btn-remover:hover {
-	    color: var(--vermelho-preco); /* Usa a variável de cor */
-	}
+    color: #d9534f;
+}
 .opcao-frete-label {
     display: block;
     margin-bottom: 8px;
@@ -744,22 +739,9 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 		    padding: 10px 0;
 		    border-bottom: 1px solid #eee;
 		}
-.item-carrinho:last-child {
-			    border-bottom: none;
-			}
-			/* Novo estilo para o item-carrinho para remover a borda superior do primeiro item */
-			#itens-carrinho .item-carrinho:first-of-type {
-			    border-top: none;
-			}
-			/* Ajuste para o mobile */
-			@media (max-width: 768px) {
-			    .item-carrinho {
-			        padding: 10px; /* Adiciona padding lateral no mobile */
-			    }
-			    .item-carrinho .btn-remover {
-			        right: 5px;
-			    }
-			}
+		.item-carrinho:last-child {
+		    border-bottom: none;
+		}
 		.item-info {
 		    display: flex;
 		    align-items: center;
@@ -853,11 +835,7 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	<span class="fechar-modal">&times;</span>
 	<h4>Seu Carrinho de Pedidos</h4>
 	<div id="itens-carrinho">
-		<div id="aviso-pagamento" style="background-color: #e6f7ff; border: 1px solid #b3e0ff; color: #004a99; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-weight: 600; text-align: center;">
-		    <i class="fas fa-info-circle" style="margin-right: 5px;"></i> Você poderá pagar a bateria apenas após a entrega e instalação.
-		</div>
 	<p id="carrinho-vazio" class="texto-centralizado">O carrinho está vazio.</p>
-		</div>
 	</div>
 	<div id="calculo-frete-area" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
 	    <h5>Calcular Frete e Opções de Envio</h5>
