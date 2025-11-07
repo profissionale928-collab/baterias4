@@ -1220,7 +1220,6 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	renderizarCarrinho();
 		}
 function finalizarPedido(e){
-    e.preventDefault();
     console.log('Finalizar Pedido acionado.');
 		
 		// 1. Verifica se o carrinho está vazio antes de tentar finalizar
@@ -1427,7 +1426,7 @@ btnIniciarPedidoEl.addEventListener('click', (e) => {
 		    // Chama a função de finalização do pedido, que fará o redirecionamento
 		    finalizarPedido(e);
 		});
-	btnFinalizarWhatsAppEl.addEventListener('click', finalizarPedido);	searchInputEl.addEventListener('keyup', () => filterProducts(searchInputEl.value));
+	searchInputEl.addEventListener('keyup', () => filterProducts(searchInputEl.value));
 	
 	
 	// --- JS PARA MENU MOBILE (Novo) ---
