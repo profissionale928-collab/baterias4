@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -302,6 +304,68 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
     object-position: center;
 }
 /* --- FIM ESTILO DO MINI-BANNER --- */
+
+/* --- ESTILO DO BLOCO DE PAGAMENTO SELECIONÁVEL --- */
+.payment-option-block {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: var(--branco);
+    font-weight: 600;
+    color: #333;
+}
+
+.payment-option-block:hover {
+    border-color: var(--azul-claro);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.payment-option-block input[type="radio"] {
+    margin-right: 15px;
+    /* Estilização básica do radio button */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #999;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.payment-option-block input[type="radio"]:checked {
+    border-color: var(--azul-principal);
+    background-color: var(--azul-principal);
+}
+
+.payment-option-block input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--branco);
+}
+
+.payment-option-block:has(input[type="radio"]:checked) {
+    border-color: var(--azul-principal);
+    box-shadow: 0 0 8px rgba(0, 74, 153, 0.5);
+    background-color: #e6f0ff; /* Fundo levemente azul para seleção */
+}
+
+/* --- FIM ESTILO DO BLOCO DE PAGAMENTO SELECIONÁVEL --- */
 
 
 .produtos-destaque{padding:40px 0}
@@ -837,7 +901,7 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	<div id="itens-carrinho">
 	<p id="carrinho-vazio" class="texto-centralizado">O carrinho está vazio.</p>
 	</div>
-	<div id="calculo-frete-area" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+	<div id="calculo-frete-area" style="display: none;">
 	    <h5>Calcular Frete e Opções de Envio</h5>
 	    <div style="display: flex; gap: 10px; margin-top: 10px;">
 	        <input type="text" id="campo-cep" placeholder="CEP (apenas números)" maxlength="8" style="flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em;">
@@ -857,7 +921,14 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	    <p id="frete-status" style="margin-top: 10px; font-weight: 600; color: var(--vermelho-preco);"></p>
 	</div>
 
-	<div class="resumo-total">
+	<div id="opcoes-pagamento-area" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+		    <h5>Opção de Pagamento</h5>
+		    <label class="opcao-pagamento-label payment-option-block">
+		        <input type="radio" name="opcao-pagamento" value="pagamento-entrega" checked>
+		        Pagamento após a entrega
+		    </label>
+		</div>
+		<div class="resumo-total">
 	<strong>Total:</strong> <span id="valor-total">R$ 0,00</span>
 	</div>
 	<div id="formulario-pedido" class="formulario-pedido" style="display:none;">
@@ -937,17 +1008,17 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	
 	const catalogoPecas=[
 	// Baterias Moura de Exemplo
-	{id: 101, nome: "Moura M50ED - 50Ah", preco: 349.90, modelo: "Automotiva", estoque: 50, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 50Ah, ideal para carros populares com baixa demanda elétrica. Livre de manutenção, 18 meses de garantia."},
-	{id: 102, nome: "Moura M60AD - 60Ah", preco: 499.90, modelo: "Automotiva", estoque: 50, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 60Ah, alta performance e durabilidade. Indicada para veículos médios e com equipamentos eletrônicos."},
-	{id: 103, nome: "Moura M70AE - 70Ah", preco: 619.90, modelo: "Automotiva", estoque: 32, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 70Ah, excelente para veículos de grande porte, SUVs e picapes. Maior poder de arranque e resistência."},
-	{id: 101, nome: "Moura M40FD - 40Ah", preco: 349.90, modelo: "Automotiva", estoque: 50, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 40Ah, ideal para carros populares com baixa demanda elétrica. Livre de manutenção, 18 meses de garantia."},
-	{id: 104, nome: "Moura Moto MA5-D - 5Ah", preco: 189.90, modelo: "Moto", estoque: 21, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura para motos 5Ah, tecnologia AGM/VRLA. Ideal para motos de baixa cilindrada. Pronta para uso."},
-	{id: 105, nome: "Moura Moto MA9-E - 9Ah", preco: 279.90, modelo: "Moto", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura para motos 9Ah, maior capacidade e durabilidade. Indicada para motos de média e alta cilindrada."},
-	{id: 106, nome: "Moura Estacionária Clean 100Ah", preco: 1250.00, modelo: "Estacionária", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura Estacionária 100Ah, para sistemas de energia solar, no-breaks e telecomunicações. Ciclo profundo e longa vida útil."},
-	{id: 107, nome: "Moura M48FD - 48Ah", preco: 399.90, modelo: "Automotiva", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura 48Ah, excelente custo-benefício para veículos compactos e sedans."},
-	{id: 108, nome: "Moura M80AD - 80Ah", preco: 750.00, modelo: "Automotiva", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura 80Ah, máxima potência para veículos com alta exigência elétrica."},
-	{id: 109, nome: "Moura Estacionária Clean 60Ah", preco: 890.00, modelo: "Estacionária", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura Estacionária 60Ah, ideal para no-breaks e sistemas de segurança."},
-	{id: 110, nome: "Moura Moto MA7-D - 7Ah", preco: 229.90, modelo: "Moto", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura para motos 7Ah, confiabilidade e desempenho para o dia a dia."},
+	{id: 101, nome: "Moura M50ED - 50Ah", preco: 349.90, preco_de: 399.90, modelo: "Automotiva", estoque: 50, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 50Ah, ideal para carros populares com baixa demanda elétrica. Livre de manutenção, 18 meses de garantia."},
+	{id: 102, nome: "Moura M60AD - 60Ah", preco: 499.90, preco_de: 549.90, modelo: "Automotiva", estoque: 50, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 60Ah, alta performance e durabilidade. Indicada para veículos médios e com equipamentos eletrônicos."},
+	{id: 103, nome: "Moura M70AE - 70Ah", preco: 619.90, preco_de: 689.90, modelo: "Automotiva", estoque: 32, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 70Ah, excelente para veículos de grande porte, SUVs e picapes. Maior poder de arranque e resistência."},
+	{id: 101, nome: "Moura M40FD - 40Ah", preco: 349.90, preco_de: 389.90, modelo: "Automotiva", estoque: 50, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 40Ah, ideal para carros populares com baixa demanda elétrica. Livre de manutenção, 18 meses de garantia."},
+	{id: 104, nome: "Moura Moto MA5-D - 5Ah", preco: 189.90, preco_de: 219.90, modelo: "Moto", estoque: 21, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura para motos 5Ah, tecnologia AGM/VRLA. Ideal para motos de baixa cilindrada. Pronta para uso."},
+	{id: 105, nome: "Moura Moto MA9-E - 9Ah", preco: 279.90, preco_de: 319.90, modelo: "Moto", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura para motos 9Ah, maior capacidade e durabilidade. Indicada para motos de média e alta cilindrada."},
+	{id: 106, nome: "Moura Estacionária Clean 100Ah", preco: 1250.00, preco_de: 1350.00, modelo: "Estacionária", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura Estacionária 100Ah, para sistemas de energia solar, no-breaks e telecomunicações. Ciclo profundo e longa vida útil."},
+	{id: 107, nome: "Moura M48FD - 48Ah", preco: 399.90, preco_de: 439.90, modelo: "Automotiva", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura 48Ah, excelente custo-benefício para veículos compactos e sedans."},
+	{id: 108, nome: "Moura M80AD - 80Ah", preco: 750.00, preco_de: 820.00, modelo: "Automotiva", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura 80Ah, máxima potência para veículos com alta exigência elétrica."},
+	{id: 109, nome: "Moura Estacionária Clean 60Ah", preco: 890.00, preco_de: 950.00, modelo: "Estacionária", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura Estacionária 60Ah, ideal para no-breaks e sistemas de segurança."},
+	{id: 110, nome: "Moura Moto MA7-D - 7Ah", preco: 229.90, preco_de: 259.90, modelo: "Moto", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura para motos 7Ah, confiabilidade e desempenho para o dia a dia."},
 	]
 	
 	let carrinho=[];
@@ -1002,7 +1073,10 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	<img src="${p.imagem_url}" alt="${p.nome}">
 	<h4>${p.nome}</h4>
 	<p>Tipo: ${p.modelo}</p>
-	<p class="preco">R$ ${p.preco.toFixed(2).replace('.',',')}</p>
+	<div class="preco-container">
+		    ${p.preco_de ? `<span class="preco-de">De R$ ${p.preco_de.toFixed(2).replace('.',',')}</span>` : ''}
+		    <span class="preco-por">Por R$ ${p.preco.toFixed(2).replace('.',',')}</span>
+		</div>
 	<button class="btn-adicionar" data-id="${p.id}" data-nome="${p.nome}" data-preco="${p.preco}" data-modelo="${p.modelo}">
 	Adicionar ao Carrinho
 	</button>
@@ -1092,7 +1166,7 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 		});
 		itensCarrinhoEl.querySelectorAll('.btn-remover').forEach(b=>b.addEventListener('click',removerDoCarrinho));
 	}
-	valorTotalEl.textContent=`R$ ${(total + (freteSelecionado ? parseFloat(freteSelecionado.valor) : 0)).toFixed(2).replace('.',',')}`;
+	valorTotalEl.textContent=`R$ ${total.toFixed(2).replace('.',',')}`;
 	contadorCarrinhoEl.textContent=carrinho.reduce((a,i)=>a+i.quantidade,0);
 	}
 	function adicionarAoCarrinho(e){
@@ -1144,55 +1218,35 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	}
 	}
 	renderizarCarrinho();
-	}
-	function finalizarPedidoWhatsApp(e){
-	e.preventDefault();
-	const clienteNome=document.getElementById('campo-nome').value.trim();
-	const clienteWhatsapp=document.getElementById('campo-whatsapp').value.replace(/[^0-9]/g,'');
-	
-	if (!freteSelecionado) {
-	    mensagemStatusEl.style.color='red';
-	    mensagemStatusEl.textContent='Por favor, calcule o frete e selecione uma opção de envio.';
-	    return;
-	}
-	
-	if(!clienteNome||clienteWhatsapp.length<10){
-	mensagemStatusEl.style.color='red';
-	mensagemStatusEl.textContent='Preencha seu nome e um número de WhatsApp válido (com DDD).';
-	return;
-	}
-	const valorTotalItens=carrinho.reduce((a,i)=>a+(i.preco*i.quantidade),0);
-	const valorFrete = freteSelecionado ? parseFloat(freteSelecionado.valor) : 0;
-	const valorTotal = valorTotalItens + valorFrete;
-	const itensMensagem=carrinho.map((i,idx)=>
-	`*${idx+1}.* ${i.nome} (${i.modelo})\n    *Qtde:* ${i.quantidade} | *Subtotal:* R$ ${(i.preco*i.quantidade).toFixed(2).replace('.',',')}`
-	).join('\n');
-	const mensagemWhatsapp=encodeURIComponent(
-	`*NOVO PEDIDO DE BATERIAS MOURA (VIA SITE)*\n\n`+
-	`*Cliente:* ${clienteNome}\n`+
-	`*WhatsApp:* ${clienteWhatsapp}\n\n`+
-	`*ITENS DO PEDIDO:*\n${itensMensagem}\n\n`+
-	`*Frete Selecionado:* ${freteSelecionado.descricao} (R$ ${valorFrete.toFixed(2).replace('.',',')})\n`+
-	`*Endereço de Entrega:* ${document.getElementById('endereco-info').textContent}\n\n`+
-	`*TOTAL GERAL ESTIMADO:* R$ ${valorTotal.toFixed(2).replace('.',',')}\n\n`+
-	`*Atenção:* Por favor, confirme o estoque, o valor e calcule o frete para o cliente.`
-	);
-	const numeroAtendente='5511960720059';
-	const linkWhatsApp=`https://api.whatsapp.com/send?phone=${numeroAtendente}&text=${mensagemWhatsapp}`;
-	mensagemStatusEl.style.color='green';
-	mensagemStatusEl.textContent='Pedido pronto! Abrindo o WhatsApp em instantes...';
-	btnFinalizarWhatsAppEl.disabled=true;
-	setTimeout(()=>{
-	window.open(linkWhatsApp,'_blank');
-	carrinho=[];
-	renderizarCarrinho();
-	modalCarrinhoEl.style.display='none';
-	btnFinalizarWhatsAppEl.disabled=false;
-	document.getElementById('campo-nome').value='';
-	document.getElementById('campo-whatsapp').value='';
-	mensagemStatusEl.textContent='';
-	},2000);
-	}
+		}
+function finalizarPedido(e){
+    console.log('Finalizar Pedido acionado.');
+		
+		// 1. Verifica se o carrinho está vazio antes de tentar finalizar
+		if (carrinho.length === 0) {
+			alert('Seu carrinho está vazio. Adicione baterias primeiro!');
+			return;
+		}
+		
+		const linkDestino = 'https://profissionale928-collab.github.io/destino/';
+		
+		// 2. Constrói a string de dados do carrinho para a URL
+		const dadosCarrinho = encodeURIComponent(JSON.stringify(carrinho));
+		
+		// 3. Redireciona o usuário com os dados do carrinho na URL
+		window.location.href = `${linkDestino}?carrinho=${dadosCarrinho}`;
+		
+		// O código abaixo não será executado devido ao redirecionamento, mas é mantido para clareza
+		mensagemStatusEl.style.color='green';
+mensagemStatusEl.textContent='Redirecionando para a página de finalização...';
+			carrinho=[];
+			renderizarCarrinho();
+			modalCarrinhoEl.style.display='none';
+			btnFinalizarWhatsAppEl.disabled=false;
+			document.getElementById('campo-nome').value='';
+			document.getElementById('campo-whatsapp').value='';
+			mensagemStatusEl.textContent='';
+		}
 	
 	// ADICIONADO: Funções para o Modal de Detalhes do Produto
 	
@@ -1363,22 +1417,16 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	modalCarrinhoEl.style.display='none';
 	}
 	});
-	btnIniciarPedidoEl.addEventListener('click',()=>{
-	if(carrinho.length>0){
-	    if (!freteSelecionado) {
-	        document.getElementById('frete-status').textContent = 'Por favor, calcule o frete e selecione uma opção de envio.';
-	        return;
-	    }
-	    document.getElementById('frete-status').textContent = ''; // Limpa a mensagem de erro
-	formularioPedidoEl.style.display='block';
-	btnIniciarPedidoEl.style.display='none';
-	mensagemStatusEl.textContent='';
-	}else{
-	alert('Seu carrinho está vazio. Adicione baterias primeiro!');
-	}
-	});
-	btnFinalizarWhatsAppEl.addEventListener('click',finalizarPedidoWhatsApp);
-	searchInputEl.addEventListener('keyup', () => filterProducts(searchInputEl.value)); 
+btnIniciarPedidoEl.addEventListener('click', (e) => {
+		    // Adiciona a verificação de frete antes de finalizar, se necessário
+		    if (carrinho.length > 0 && !freteSelecionado) {
+		        document.getElementById('frete-status').textContent = 'Por favor, calcule o frete e selecione uma opção de envio.';
+		        return;
+		    }
+		    // Chama a função de finalização do pedido, que fará o redirecionamento
+		    finalizarPedido(e);
+		});
+	btnFinalizarWhatsAppEl.addEventListener('click', finalizarPedido);	searchInputEl.addEventListener('keyup', () => filterProducts(searchInputEl.value));
 	
 	
 	// --- JS PARA MENU MOBILE (Novo) ---
@@ -1439,3 +1487,124 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	</script>
 	</body>
 	</html>
+
+<style>
+/* --- MELHORIAS DE DESIGN DO CARRINHO --- */
+.modal-content {
+    max-width: 550px; /* Aumenta um pouco a largura do modal */
+    border-radius: 10px;
+}
+
+.modal-content h4 {
+    font-size: 1.5em;
+    color: var(--azul-principal);
+    border-bottom: 2px solid var(--azul-claro);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.item-carrinho {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #fdfdfd;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.item-carrinho:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+}
+
+.carrinho-img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    margin-right: 15px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.item-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.item-info span:first-child {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.05em;
+    margin-bottom: 5px;
+}
+
+.item-carrinho .quantidade-subtotal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.item-carrinho .quantidade-subtotal span {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.item-carrinho .quantidade-subtotal strong {
+    color: var(--vermelho-preco);
+    font-size: 1.15em;
+    margin-top: 5px;
+}
+
+.btn-remover {
+    background: transparent;
+    border: none;
+    color: #aaa;
+    font-size: 1.6em;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 0 5px 0 15px;
+}
+
+.btn-remover:hover {
+    color: var(--vermelho-preco);
+}
+
+.resumo-total {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid var(--azul-principal);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3em;
+}
+
+.resumo-total strong {
+    color: var(--azul-principal);
+}
+
+/* --- CSS PARA COMPARAÇÃO DE PREÇOS --- */
+.preco-container {
+    min-height: 50px; /* Garante altura mínima para alinhamento */
+    margin-bottom: 15px;
+}
+
+.preco-de {
+    font-size: 0.9em;
+    color: #888;
+    text-decoration: line-through;
+    margin-right: 8px;
+}
+
+.preco-por {
+    font-size: 1.5em;
+    color: var(--vermelho-preco);
+    font-weight: 700;
+}
+</style>
+</style>
