@@ -940,9 +940,9 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	</button>
 	<p id="mensagem-status" class="mensagem-status"></p>
 	</div>
-	<a href="LINK_EXTERNO_AQUI" id="btn-iniciar-pedido" class="btn-azul-escuro" style="margin-top:15px; text-decoration: none; display: block; text-align: center;" target="_blank">
+	<button id="btn-iniciar-pedido" class="btn-azul-escuro" style="margin-top:15px;">
 	Finalizar Pedido
-	</a>
+	</button>
 	</div>
 	</div>
 	
@@ -1136,7 +1136,7 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 		let total=0;
 	if(carrinho.length===0){
 	carrinhoVazioEl.style.display='block';
-	// btnIniciarPedidoEl.disabled=true; // Removido pois agora é um link (<a>)
+	btnIniciarPedidoEl.disabled=true;
 	    // Reseta o frete se o carrinho estiver vazio
 	    freteSelecionado = null;
 	    if (campoCep) campoCep.value = '';
@@ -1147,7 +1147,7 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	    radios.forEach(radio => radio.checked = false);
 	}else{
 	carrinhoVazioEl.style.display='none';
-	// btnIniciarPedidoEl.disabled=false; // Removido pois agora é um link (<a>)
+	btnIniciarPedidoEl.disabled=false;
 		carrinho.forEach(item=>{
 		const subtotal=item.preco*item.quantidade;
 		total+=subtotal;
@@ -1200,7 +1200,7 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 			    // NOVO: Abre o modal do carrinho automaticamente
 			    modalCarrinhoEl.style.display='block';
 			    formularioPedidoEl.style.display='none';
-			    // btnIniciarPedidoEl.style.display='block'; // Removido pois agora é um link (<a>) e o display: block está no style inline
+			    btnIniciarPedidoEl.style.display='block';
 		    
 		    // 3. Restaura o botão
 		    botao.classList.remove('loading');
@@ -1427,7 +1427,7 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	renderizarCarrinho(); // Garante que o carrinho está atualizado antes de abrir
 	modalCarrinhoEl.style.display='block';
 	formularioPedidoEl.style.display='none';
-	// btnIniciarPedidoEl.style.display='block'; // Removido pois agora é um link (<a>) e o display: block está no style inline
+	btnIniciarPedidoEl.style.display='block';
 	});
 	document.querySelector('.fechar-modal').addEventListener('click',()=>{
 	modalCarrinhoEl.style.display='none';
@@ -1437,21 +1437,11 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	modalCarrinhoEl.style.display='none';
 	}
 	});
-	// btnIniciarPedidoEl.addEventListener('click',()=>{ // Removido pois agora é um link (<a>) e não precisa de listener
-	if(carrinho.length>0){
-	    if (!freteSelecionado) {
-	        document.getElementById('frete-status').textContent = 'Por favor, calcule o frete e selecione uma opção de envio.';
-	        return;
-	    }
-	    document.getElementById('frete-status').textContent = ''; // Limpa a mensagem de erro
-	formularioPedidoEl.style.display='block';
-	// btnIniciarPedidoEl.style.display='none'; // Removido pois agora é um link (<a>) e o display: block está no style inline
-	mensagemStatusEl.textContent='';
-	}else{
-	alert('Seu carrinho está vazio. Adicione baterias primeiro!');
-	}
-	});
-	btnFinalizarWhatsAppEl.addEventListener('click',finalizarPedidoWhatsApp);
+	btnIniciarPedidoEl.addEventListener('click',()=>{
+    // Redirecionamento para link externo conforme solicitado
+    window.open('https://api.whatsapp.com/send?phone=5511960720059&text=Ol%C3%A1%2C%20gostaria%20de%20finalizar%20meu%20pedido%20de%20baterias%20Moura.', '_blank');
+});
+btnFinalizarWhatsAppEl.addEventListener('click',finalizarPedidoWhatsApp);
 	searchInputEl.addEventListener('keyup', () => filterProducts(searchInputEl.value)); 
 	
 	
