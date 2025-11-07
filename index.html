@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1233,19 +1234,22 @@ function finalizarPedido(e){
 		// 2. Constrói a string de dados do carrinho para a URL
 		const dadosCarrinho = encodeURIComponent(JSON.stringify(carrinho));
 		
-		// 3. Redireciona o usuário com os dados do carrinho na URL
-		window.location.href = `${linkDestino}?carrinho=${dadosCarrinho}`;
-		
-		// O código abaixo não será executado devido ao redirecionamento, mas é mantido para clareza
-		mensagemStatusEl.style.color='green';
-mensagemStatusEl.textContent='Redirecionando para a página de finalização...';
-			carrinho=[];
-			renderizarCarrinho();
-			modalCarrinhoEl.style.display='none';
-			btnFinalizarWhatsAppEl.disabled=false;
-			document.getElementById('campo-nome').value='';
-			document.getElementById('campo-whatsapp').value='';
-			mensagemStatusEl.textContent='';
+// 3. Redireciona o usuário com os dados do carrinho na URL
+			window.location.href = `${linkDestino}?carrinho=${dadosCarrinho}`;
+			
+			// O código abaixo é a lógica de limpeza e feedback que não será executada após o redirecionamento,
+			// mas é mantida por segurança caso o redirecionamento falhe ou seja bloqueado.
+			mensagemStatusEl.style.color='green';
+			mensagemStatusEl.textContent='Redirecionando para a página de finalização...';
+			setTimeout(() => {
+				carrinho=[];
+				renderizarCarrinho();
+				modalCarrinhoEl.style.display='none';
+				btnFinalizarWhatsAppEl.disabled=false;
+				document.getElementById('campo-nome').value='';
+				document.getElementById('campo-whatsapp').value='';
+				mensagemStatusEl.textContent='';
+			}, 1000); // Adiciona um pequeno delay para a mensagem de status aparecer antes do redirecionamento (se não for imediato)
 		}
 	
 	// ADICIONADO: Funções para o Modal de Detalhes do Produto
