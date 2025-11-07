@@ -1,14 +1,12 @@
 
 
 
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <link rel="icon" type="image/x-icon" href="https://i.imgur.com/CIstRaz.png"> <!-- Manter o favicon original ou buscar um da Moura -->
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width-device-width, initial-scale=1.0">
 <title>Baterias Moura - Distribuidor Oficial</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -307,6 +305,68 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 }
 /* --- FIM ESTILO DO MINI-BANNER --- */
 
+/* --- ESTILO DO BLOCO DE PAGAMENTO SELECIONÁVEL --- */
+.payment-option-block {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: var(--branco);
+    font-weight: 600;
+    color: #333;
+}
+
+.payment-option-block:hover {
+    border-color: var(--azul-claro);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.payment-option-block input[type="radio"] {
+    margin-right: 15px;
+    /* Estilização básica do radio button */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #999;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.payment-option-block input[type="radio"]:checked {
+    border-color: var(--azul-principal);
+    background-color: var(--azul-principal);
+}
+
+.payment-option-block input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--branco);
+}
+
+.payment-option-block:has(input[type="radio"]:checked) {
+    border-color: var(--azul-principal);
+    box-shadow: 0 0 8px rgba(0, 74, 153, 0.5);
+    background-color: #e6f0ff; /* Fundo levemente azul para seleção */
+}
+
+/* --- FIM ESTILO DO BLOCO DE PAGAMENTO SELECIONÁVEL --- */
+
 
 .produtos-destaque{padding:40px 0}
 .produtos-destaque h3{text-align:center;color:var(--azul-principal);margin-bottom:30px;font-size:2em}
@@ -377,6 +437,49 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 }
 .item-carrinho .btn-remover:hover {
     color: #d9534f;
+}
+.opcao-frete-label {
+    display: block;
+    margin-bottom: 8px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.opcao-frete-label:hover {
+    background-color: #f9f9f9;
+}
+.opcao-frete-label input[type="radio"] {
+    margin-right: 10px;
+}
+.opcao-frete-label input[type="radio"]:checked + span {
+    font-weight: bold;
+    color: var(--azul-principal);
+}
+.btn-azul-escuro.loading {
+    pointer-events: none;
+    opacity: 0.8;
+    position: relative;
+    color: transparent !important;
+}
+.btn-azul-escuro.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--branco);
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 .resumo-total{text-align:right;margin-top:15px;font-size:1.2em;font-weight:700;color:var(--azul-principal)}
 .resumo-total span{color:var(--vermelho-preco)}
@@ -590,17 +693,18 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
     .novo-header.show-menu {
         left: 0;
     }
-
+    
+    /* Ajustes internos do menu mobile */
     .novo-header .container {
-        padding: 0;
-        height: 100%;
-        align-items: flex-start;
-    }
-    .novo-header .main-nav ul {
-        flex-direction: column; 
+        flex-direction: column;
         padding: 60px 0 20px 0; 
         justify-content: flex-start;
         align-items: flex-start;
+        width: 100%;
+    }
+    .novo-header .main-nav > ul {
+        flex-direction: column;
+        padding: 0; 
         width: 100%;
     }
     .novo-header .main-nav > ul > li {
@@ -693,541 +797,840 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 }
 /* --- FIM DO CSS MOBILE --- */
 .item-carrinho {
-	    display: flex;
-	    align-items: center;
-	    justify-content: space-between;
-	    padding: 10px 0;
-	    border-bottom: 1px solid #eee;
-	}
-	.item-carrinho:last-child {
-	    border-bottom: none;
-	}
-	.item-info {
-	    display: flex;
-	    align-items: center;
-	    flex-grow: 1;
-	}
-	.carrinho-img {
-	    width: 50px;
-	    height: 50px;
-	    object-fit: contain;
-	    margin-right: 10px;
-	    border-radius: 3px;
-	}
-	</style>
-</head>
-<body>
-<div id="pagina-container">
-<header class="header-azul">
-<div class="container">
-    <button id="menu-hamburguer" class="menu-hamburguer">
-        <i class="fas fa-bars"></i>
-    </button>
-    
-    <a class='logo-area-link' href='/'>
-        <img src="https://i.imgur.com/v8w7x7x.png" alt="Logo Moura" class="logo-distribuidora-nav">
-        <img src="https://i.imgur.com/v8w7x7x.png" alt="Logo Moura" class="logo-kia-hyundai-nav" style="display:none;"> <!-- Escondida para usar apenas uma logo -->
-        <h1 class="logo-text">Distribuidor Oficial Baterias Moura</h1>
-    </a>
-    <div class="search-container">
-        <input type="text" id="search-input" placeholder="Buscar por modelo ou amperagem...">
-    </div>
-    
-    <div class="nav-acoes">
-        <button id="abrir-carrinho" class="btn-carrinho">
-            <i class="fas fa-shopping-cart"></i> Carrinho (<span id="contador-carrinho">0</span>)
-        </button>
-    </div>
-</div>
-</header>
-
-<header class="novo-header" id="menu-mobile-container">
-    <div class="container">
-        <nav class="main-nav" id="menu-mobile">
-            <ul>
-                <li><a href='/quemsomos'>Quem Somos</a></li>
-                <li class="has-submenu">
-                    <a href="#">Baterias <i class="fas fa-chevron-down"></i></a>
-                    <ul class="submenu">
-                        <li><a href="#" onclick="filterByBrand('Automotiva'); return false;">Automotiva</a></li>
-                        <li><a href="#" onclick="filterByBrand('Moto'); return false;">Moto</a></li>
-                        <li><a href="#" onclick="filterByBrand('Estacionária'); return false;">Estacionária</a></li>
-                    </ul>
-                </li>
-                <li><a href='/noticias'>Dicas e Manutenção</a></li>
-                <li class="has-submenu">
-                    <a href="#">Contato <i class="fas fa-chevron-down"></i></a>
-                    <ul class="submenu">
-                        <li><a href="https://api.whatsapp.com/send?phone=5511960720059&text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20com%20baterias%20Moura." target="_blank">Fale Conosco</a></li>
-                        <li><a href="#">Onde Encontrar</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="https://api.whatsapp.com/send?phone=5511960720059&text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20com%20baterias%20Moura." target="_blank" style="color: var(--azul-claro); font-weight: 700;">
-                        Solicite seu Orçamento
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</header>
-<section class="mini-banner-area">
-    <div id="banner-slider">
-        <div class="banner-slide">
-            <img src="https://i.imgur.com/v8w7x7x.png" alt="Banner Bateria Moura">
-        </div>
-        <div class="banner-slide">
-            <img src="https://i.imgur.com/v8w7x7x.png" alt="Banner Bateria Moura">
-        </div>
-        <div class="banner-slide">
-            <img src="https://i.imgur.com/v8w7x7x.png" alt="Banner Bateria Moura">
-        </div>
-    </div>
-</section>
-<main id="conteudo-principal">
-<section id="produtos" class="produtos-destaque container">
-<h3>Baterias em Destaque</h3>
-<div class="grid-produtos" id="lista-produtos"></div>
-</section>
-</main>
-<div id="modal-carrinho" class="modal">
-<div class="modal-content">
-<span class="fechar-modal">&times;</span>
-<h4>Seu Carrinho de Pedidos</h4>
-<div id="itens-carrinho">
-<p id="carrinho-vazio" class="texto-centralizado">O carrinho está vazio.</p>
-</div>
-<div class="resumo-total">
-<strong>Total:</strong> <span id="valor-total">R$ 0,00</span>
-</div>
-<div id="formulario-pedido" class="formulario-pedido" style="display:none;">
-<h5>Detalhes para Envio do Pedido via WhatsApp</h5>
-<input type="text" id="campo-nome" placeholder="Seu Nome Completo" required>
-<input type="tel" id="campo-whatsapp" placeholder="Seu WhatsApp (apenas números)" required>
-<button id="finalizar-whatsapp" class="btn-whatsapp-finalizar">
-<i class="fab fa-whatsapp"></i> Enviar Pedido para Atendente
-</button>
-<p id="mensagem-status" class="mensagem-status"></p>
-</div>
-<button id="btn-iniciar-pedido" class="btn-azul-escuro" style="margin-top:15px;">
-Finalizar Pedido
-</button>
-</div>
-</div>
-
-<div id="detalhes-produto-modal" class="modal">
-    <div class="modal-content">
-        <span class="fechar-modal" onclick="fecharDetalhesProdutoModal()">&times;</span>
-        <h3 style="color:var(--azul-principal); margin-bottom: 20px;">Detalhes do Produto</h3>
-        <div id="detalhes-produto-body">
-            </div>
-    </div>
-</div>
-<footer class="footer-azul">
-    <div class="container footer-grid">
-        <div class="footer-col footer-info">
-            <h4 class="footer-logo">Baterias Moura - Distribuidor</h4>
-            <p>A energia que move o Brasil. Distribuidor oficial das Baterias Moura.</p>
-            
-            <div class="contato-info">
-                <p><i class="fab fa-whatsapp"></i>(11) 96072-0059</p>
-                <p><i class="fas fa-envelope"></i> contato@bateriasmoura.com.br</p>
-            </div>
-
-        </div>
-
-        <div class="footer-col footer-links">
-            <h4>Navegação Rápida</h4>
-            <ul>
-                <li><a href='/quemsomos'>Quem Somos</a></li>
-                <li><a href="#" onclick="filterByBrand('Automotiva'); return false;">Baterias Automotivas</a></li>
-                <li><a href="#" onclick="filterByBrand('Moto'); return false;">Baterias para Moto</a></li>
-                <li><a href='/noticias'>Dicas e Manutenção</a></li>
-                <li><a href="#">Política de Privacidade</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-col footer-newsletter">
-            <h4>Receba Nossas Novidades</h4>
-            <p>Inscreva-se e receba promoções exclusivas e dicas de manutenção de baterias.</p>
-            <form action="#" method="post" class="newsletter-form">
-                <input type="email" placeholder="Seu E-mail" required>
-                <button type="submit" class="btn-newsletter">Inscrever</button>
-            </form>
-        </div>
-    </div>
-    
-    <div class="footer-bottom">
-        <div class="container">
-            <p>&copy; 2025 Baterias Moura - Distribuidor Oficial. Todos os direitos reservados.</p>
-        </div>
-    </div>
-</footer>
-</div>
-
-<div id="notification-snackbar"></div>
-
-<div class="whatsapp-float">
-    <a href="https://api.whatsapp.com/send?phone=5511960720059&text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20com%20baterias%20Moura." target="_blank">
-        <i class="fab fa-whatsapp"></i>
-        Solicitar Orçamento
-    </a>
-</div>
-<script>
-
-const catalogoPecas=[
-// Baterias Moura de Exemplo
-{id: 101, nome: "Moura M50ED - 50Ah", preco: 349.90, modelo: "Automotiva", estoque: 50, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 50Ah, ideal para carros populares com baixa demanda elétrica. Livre de manutenção, 18 meses de garantia."},
-{id: 102, nome: "Moura M60AD - 60Ah", preco: 499.90, modelo: "Automotiva", estoque: 50, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 60Ah, alta performance e durabilidade. Indicada para veículos médios e com equipamentos eletrônicos."},
-{id: 103, nome: "Moura M70AE - 70Ah", preco: 619.90, modelo: "Automotiva", estoque: 32, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 70Ah, excelente para veículos de grande porte, SUVs e picapes. Maior poder de arranque e resistência."},
-{id: 101, nome: "Moura M40FD - 40Ah", preco: 349.90, modelo: "Automotiva", estoque: 50, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 40Ah, ideal para carros populares com baixa demanda elétrica. Livre de manutenção, 18 meses de garantia."},
-{id: 104, nome: "Moura Moto MA5-D - 5Ah", preco: 189.90, modelo: "Moto", estoque: 21, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura para motos 5Ah, tecnologia AGM/VRLA. Ideal para motos de baixa cilindrada. Pronta para uso."},
-{id: 105, nome: "Moura Moto MA9-E - 9Ah", preco: 279.90, modelo: "Moto", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura para motos 9Ah, maior capacidade e durabilidade. Indicada para motos de média e alta cilindrada."},
-{id: 106, nome: "Moura Estacionária Clean 100Ah", preco: 1250.00, modelo: "Estacionária", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura Estacionária 100Ah, para sistemas de energia solar, no-breaks e telecomunicações. Ciclo profundo e longa vida útil."},
-{id: 107, nome: "Moura M48FD - 48Ah", preco: 399.90, modelo: "Automotiva", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura 48Ah, excelente custo-benefício para veículos compactos e sedans."},
-{id: 108, nome: "Moura M80AD - 80Ah", preco: 750.00, modelo: "Automotiva", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura 80Ah, máxima potência para veículos com alta exigência elétrica."},
-{id: 109, nome: "Moura Estacionária Clean 60Ah", preco: 890.00, modelo: "Estacionária", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura Estacionária 60Ah, ideal para no-breaks e sistemas de segurança."},
-{id: 110, nome: "Moura Moto MA7-D - 7Ah", preco: 229.90, modelo: "Moto", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura para motos 7Ah, confiabilidade e desempenho para o dia a dia."},
-]
-
-let carrinho=[];
-const listaProdutosEl=document.getElementById('lista-produtos');
-const contadorCarrinhoEl=document.getElementById('contador-carrinho');
-const modalCarrinhoEl=document.getElementById('modal-carrinho');
-const itensCarrinhoEl=document.getElementById('itens-carrinho');
-const valorTotalEl=document.getElementById('valor-total');
-const carrinhoVazioEl=document.getElementById('carrinho-vazio');
-const formularioPedidoEl=document.getElementById('formulario-pedido');
-const btnIniciarPedidoEl=document.getElementById('btn-iniciar-pedido');
-const btnFinalizarWhatsAppEl=document.getElementById('finalizar-whatsapp');
-const mensagemStatusEl=document.getElementById('mensagem-status');
-const notificationSnackbarEl=document.getElementById('notification-snackbar');
-const searchInputEl = document.getElementById('search-input'); 
-const bannerSliderEl = document.getElementById('banner-slider'); 
-
-// Variáveis do Banner Slider
-let currentSlide = 0;
-const totalSlides = 3; 
-
-// Variáveis do Menu Mobile
-const menuHamburguerEl = document.getElementById('menu-hamburguer');
-const menuMobileContainerEl = document.getElementById('menu-mobile-container');
-const submenuLinks = document.querySelectorAll('#menu-mobile .has-submenu > a');
-
-function showNotification(message) {
-    notificationSnackbarEl.classList.remove('show');
-    notificationSnackbarEl.innerHTML = message;
-    notificationSnackbarEl.classList.add('show');
-    
-    setTimeout(() => {
-        notificationSnackbarEl.classList.remove('show');
-    }, 4000); 
-}
-
-function startBannerSlider() {
-    // A função de slider só precisa ser executada se o banner estiver visível
-    if(window.innerWidth >= 1200) {
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            const offset = -currentSlide * 100;
-            bannerSliderEl.style.transform = `translateX(${offset}%)`;
-        }, 3000); 
-    }
-}
-
-function carregarProdutos(){
-listaProdutosEl.innerHTML=catalogoPecas.map(p=>`
-<div class="produto-card" data-id="${p.id}" data-nome="${p.nome.toLowerCase()}" data-modelo="${p.modelo.toLowerCase()}">
-<img src="${p.imagem_url}" alt="${p.nome}">
-<h4>${p.nome}</h4>
-<p>Tipo: ${p.modelo}</p>
-<p class="preco">R$ ${p.preco.toFixed(2).replace('.',',')}</p>
-<button class="btn-adicionar" data-id="${p.id}" data-nome="${p.nome}" data-preco="${p.preco}" data-modelo="${p.modelo}">
-Adicionar ao Carrinho
-</button>
-</div>
-`).join('');
-document.querySelectorAll('.btn-adicionar').forEach(b=>b.addEventListener('click',adicionarAoCarrinho));
-// Re-adiciona o listener para o modal de detalhes após carregar os produtos
-adicionarListenersDetalheProduto();
-}
-
-
-// Função que filtra por marca, limpando a busca por texto
-function filterByBrand(brand) {
-    searchInputEl.value = ''; 
-    filterProducts(brand); 
-    // Fechar menu mobile se estiver aberto após clique
-    if (window.innerWidth <= 768) {
-         menuMobileContainerEl.classList.remove('show-menu');
-    }
-}
-
-// Função de filtro unificada (para busca por texto e marca)
-function filterProducts(filterTermOrBrand = null) {
-    const filterValue = filterTermOrBrand ? filterTermOrBrand.toLowerCase().trim() : searchInputEl.value.toLowerCase().trim();
-    const cards = document.querySelectorAll('.produto-card');
-
-    cards.forEach(card => {
-        const nome = card.dataset.nome;
-        const modelo = card.dataset.modelo;
-        
-        if (filterValue === '') {
-            card.classList.remove('hidden');
-            return;
-        }
-
-        // Filtra por nome, modelo (tipo de bateria) ou pela marca (Moura)
-        if (nome.includes(filterValue) || modelo.includes(filterValue) || 'moura'.includes(filterValue)) {
-            card.classList.remove('hidden');
-        } else {
-            card.classList.add('hidden');
-        }
-    });
-}
-
-
-function renderizarCarrinho(){
-itensCarrinhoEl.innerHTML='';
-let total=0;
-if(carrinho.length===0){
-carrinhoVazioEl.style.display='block';
-btnIniciarPedidoEl.disabled=true;
-}else{
-carrinhoVazioEl.style.display='none';
-btnIniciarPedidoEl.disabled=false;
-carrinho.forEach(item=>{
-const subtotal=item.preco*item.quantidade;
-total+=subtotal;
-const itemEl=document.createElement('div');
-itemEl.classList.add('item-carrinho');
-itemEl.innerHTML=`
-	<div class="item-info">
-	<img src="${item.imagem_url}" alt="${item.nome}" class="carrinho-img">
-	<span>${item.nome} (${item.modelo})</span>
+		    display: flex;
+		    align-items: center;
+		    justify-content: space-between;
+		    padding: 10px 0;
+		    border-bottom: 1px solid #eee;
+		}
+		.item-carrinho:last-child {
+		    border-bottom: none;
+		}
+		.item-info {
+		    display: flex;
+		    align-items: center;
+		    flex-grow: 1;
+		}
+		.carrinho-img {
+		    width: 50px;
+		    height: 50px;
+		    object-fit: contain;
+		    margin-right: 10px;
+		    border-radius: 3px;
+		}
+		</style>
+	</head>
+	<body>
+	<div id="pagina-container">
+	<header class="header-azul">
+	<div class="container">
+	    <button id="menu-hamburguer" class="menu-hamburguer">
+	        <i class="fas fa-bars"></i>
+	    </button>
+	    
+	    <a class='logo-area-link' href='/'>
+	        <img src="https://i.imgur.com/v8w7x7x.png" alt="Logo Moura" class="logo-distribuidora-nav">
+	        <img src="https://i.imgur.com/v8w7x7x.png" alt="Logo Moura" class="logo-kia-hyundai-nav" style="display:none;"> <!-- Escondida para usar apenas uma logo -->
+	        <h1 class="logo-text">Distribuidor Oficial Baterias Moura</h1>
+	    </a>
+	    <div class="search-container">
+	        <input type="text" id="search-input" placeholder="Buscar por modelo ou amperagem...">
+	    </div>
+	    
+	    <div class="nav-acoes">
+	        <button id="abrir-carrinho" class="btn-carrinho">
+	            <i class="fas fa-shopping-cart"></i> Carrinho (<span id="contador-carrinho">0</span>)
+	        </button>
+	    </div>
 	</div>
-	<span>${item.quantidade}x</span>
-	<strong>R$ ${subtotal.toFixed(2).replace('.',',')}</strong>
-	<button class="btn-remover" data-id="${item.id}">&times;</button>
-	`;
-itensCarrinhoEl.appendChild(itemEl);
-});
-itensCarrinhoEl.querySelectorAll('.btn-remover').forEach(b=>b.addEventListener('click',removerDoCarrinho));
-}
-valorTotalEl.textContent=`R$ ${total.toFixed(2).replace('.',',')}`;
-contadorCarrinhoEl.textContent=carrinho.reduce((a,i)=>a+i.quantidade,0);
-}
-function adicionarAoCarrinho(e){
-	const botao = e.target.closest('.btn-adicionar');
-	if (!botao) return;
+	</header>
 	
-	// 1. Inicia o estado de carregamento
-	botao.classList.add('loading');
-	botao.textContent = ''; // Limpa o texto para mostrar o spinner
+	<header class="novo-header" id="menu-mobile-container">
+	    <div class="container">
+	        <nav class="main-nav" id="menu-mobile">
+	            <ul>
+	                <li><a href='/quemsomos'>Quem Somos</a></li>
+	                <li class="has-submenu">
+	                    <a href="#">Baterias <i class="fas fa-chevron-down"></i></a>
+	                    <ul class="submenu">
+	                        <li><a href="#" onclick="filterByBrand('Automotiva'); return false;">Automotiva</a></li>
+	                        <li><a href="#" onclick="filterByBrand('Moto'); return false;">Moto</a></li>
+	                        <li><a href="#" onclick="filterByBrand('Estacionária'); return false;">Estacionária</a></li>
+	                    </ul>
+	                </li>
+	                <li><a href='/noticias'>Dicas e Manutenção</a></li>
+	                <li class="has-submenu">
+	                    <a href="#">Contato <i class="fas fa-chevron-down"></i></a>
+	                    <ul class="submenu">
+	                        <li><a href="https://api.whatsapp.com/send?phone=5511960720059&text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20com%20baterias%20Moura." target="_blank">Fale Conosco</a></li>
+	                        <li><a href="#">Onde Encontrar</a></li>
+	                    </ul>
+	                </li>
+	                <li>
+	                    <a href="https://api.whatsapp.com/send?phone=5511960720059&text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20com%20baterias%20Moura." target="_blank" style="color: var(--azul-claro); font-weight: 700;">
+	                        Solicite seu Orçamento
+	                    </a>
+	                </li>
+	            </ul>
+	        </nav>
+	    </div>
+	</header>
+	<section class="mini-banner-area">
+	    <div id="banner-slider">
+	        <div class="banner-slide">
+	            <img src="https://i.imgur.com/v8w7x7x.png" alt="Banner Bateria Moura">
+	        </div>
+	        <div class="banner-slide">
+	            <img src="https://i.imgur.com/v8w7x7x.png" alt="Banner Bateria Moura">
+	        </div>
+	        <div class="banner-slide">
+	            <img src="https://i.imgur.com/v8w7x7x.png" alt="Banner Bateria Moura">
+	        </div>
+	    </div>
+	</section>
+	<main id="conteudo-principal">
+	<section id="produtos" class="produtos-destaque container">
+	<h3>Baterias em Destaque</h3>
+	<div class="grid-produtos" id="lista-produtos"></div>
+	</section>
+	</main>
+	<div id="modal-carrinho" class="modal">
+	<div class="modal-content">
+	<span class="fechar-modal">&times;</span>
+	<h4>Seu Carrinho de Pedidos</h4>
+	<div id="itens-carrinho">
+	<p id="carrinho-vazio" class="texto-centralizado">O carrinho está vazio.</p>
+	</div>
+	<div id="calculo-frete-area" style="display: none;">
+	    <h5>Calcular Frete e Opções de Envio</h5>
+	    <div style="display: flex; gap: 10px; margin-top: 10px;">
+	        <input type="text" id="campo-cep" placeholder="CEP (apenas números)" maxlength="8" style="flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em;">
+	        <button id="btn-calcular-frete" class="btn-azul-escuro" style="width: auto; padding: 10px 15px; margin-top: 0;">Calcular</button>
+	    </div>
+	    <p id="endereco-info" style="margin-top: 5px; font-size: 0.9em; color: #666; min-height: 1.2em;"></p>
+	    <div id="opcoes-frete" style="margin-top: 10px; display: none;">
+	        <label class="opcao-frete-label">
+	            <input type="radio" name="opcao-frete" value="39.00" data-descricao="Envio" data-prazo="Amanhã">
+	            <span>Envio (R$ 39,00) - Entrega: Amanhã</span>
+	        </label>
+	        <label class="opcao-frete-label">
+	            <input type="radio" name="opcao-frete" value="55.00" data-descricao="Envio + Instalação" data-prazo="Amanhã">
+	            <span>Envio + Instalação (R$ 55,00) - Entrega: Amanhã</span>
+	        </label>
+	    </div>
+	    <p id="frete-status" style="margin-top: 10px; font-weight: 600; color: var(--vermelho-preco);"></p>
+	</div>
+
+	<div id="opcoes-pagamento-area" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+		    <h5>Opção de Pagamento</h5>
+		    <label class="opcao-pagamento-label payment-option-block">
+		        <input type="radio" name="opcao-pagamento" value="pagamento-entrega" checked>
+		        Pagamento após a entrega
+		    </label>
+		</div>
+		<div class="resumo-total">
+	<strong>Total:</strong> <span id="valor-total">R$ 0,00</span>
+	</div>
+	<div id="formulario-pedido" class="formulario-pedido" style="display:none;">
+	<h5>Detalhes para Envio do Pedido via WhatsApp</h5>
+	<input type="text" id="campo-nome" placeholder="Seu Nome Completo" required>
+	<input type="tel" id="campo-whatsapp" placeholder="Seu WhatsApp (apenas números)" required>
+	<button id="finalizar-whatsapp" class="btn-whatsapp-finalizar">
+	<i class="fab fa-whatsapp"></i> Enviar Pedido para Atendente
+	</button>
+	<p id="mensagem-status" class="mensagem-status"></p>
+	</div>
+	<a href="LINK_EXTERNO_AQUI" id="btn-iniciar-pedido" class="btn-azul-escuro" style="margin-top:15px; text-decoration: none; display: block; text-align: center;" target="_blank">
+	Finalizar Pedido
+	</a>
+	</div>
+	</div>
 	
-	// Simula o tempo de carregamento (1 segundo)
-	setTimeout(() => {
-	    const id=parseInt(botao.dataset.id);
-		    const itemProduto = catalogoPecas.find(p => p.id === id);
-		    if (!itemProduto) return; // Garante que o produto existe
-	    const nome=botao.dataset.nome;
-	    const preco=parseFloat(botao.dataset.preco);
-	    const modelo=botao.dataset.modelo;
+	<div id="detalhes-produto-modal" class="modal">
+	    <div class="modal-content">
+	        <span class="fechar-modal" onclick="fecharDetalhesProdutoModal()">&times;</span>
+	        <h3 style="color:var(--azul-principal); margin-bottom: 20px;">Detalhes do Produto</h3>
+	        <div id="detalhes-produto-body">
+	            </div>
+	    </div>
+	</div>
+	<footer class="footer-azul">
+	    <div class="container footer-grid">
+	        <div class="footer-col footer-info">
+	            <h4 class="footer-logo">Baterias Moura - Distribuidor</h4>
+	            <p>A energia que move o Brasil. Distribuidor oficial das Baterias Moura.</p>
+	            
+	            <div class="contato-info">
+	                <p><i class="fab fa-whatsapp"></i>(11) 96072-0059</p>
+	                <p><i class="fas fa-envelope"></i> contato@bateriasmoura.com.br</p>
+	            </div>
 	
-	    const itemExistente=carrinho.find(i=>i.id===id);
-	    if(itemExistente){
-	        itemExistente.quantidade++;
-	    }else{
-	        carrinho.push({id,nome,preco,quantidade:1,modelo,imagem_url: itemProduto.imagem_url});
+	        </div>
+	
+	        <div class="footer-col footer-links">
+	            <h4>Navegação Rápida</h4>
+	            <ul>
+	                <li><a href='/quemsomos'>Quem Somos</a></li>
+	                <li><a href="#" onclick="filterByBrand('Automotiva'); return false;">Baterias Automotivas</a></li>
+	                <li><a href="#" onclick="filterByBrand('Moto'); return false;">Baterias para Moto</a></li>
+	                <li><a href='/noticias'>Dicas e Manutenção</a></li>
+	                <li><a href="#">Política de Privacidade</a></li>
+	            </ul>
+	        </div>
+	
+	        <div class="footer-col footer-newsletter">
+	            <h4>Receba Nossas Novidades</h4>
+	            <p>Inscreva-se e receba promoções exclusivas e dicas de manutenção de baterias.</p>
+	            <form action="#" method="post" class="newsletter-form">
+	                <input type="email" placeholder="Seu E-mail" required>
+	                <button type="submit" class="btn-newsletter">Inscrever</button>
+	            </form>
+	        </div>
+	    </div>
+	    
+	    <div class="footer-bottom">
+	        <div class="container">
+	            <p>&copy; 2025 Baterias Moura - Distribuidor Oficial. Todos os direitos reservados.</p>
+	        </div>
+	    </div>
+	</footer>
+	</div>
+	
+	<div id="notification-snackbar"></div>
+	
+	<div class="whatsapp-float">
+	    <a href="https://api.whatsapp.com/send?phone=5511960720059&text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20com%20baterias%20Moura." target="_blank">
+	        <i class="fab fa-whatsapp"></i>
+	        Solicitar Orçamento
+	    </a>
+	</div>
+	<script>
+	
+	const catalogoPecas=[
+	// Baterias Moura de Exemplo
+	{id: 101, nome: "Moura M50ED - 50Ah", preco: 349.90, preco_de: 399.90, modelo: "Automotiva", estoque: 50, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 50Ah, ideal para carros populares com baixa demanda elétrica. Livre de manutenção, 18 meses de garantia."},
+	{id: 102, nome: "Moura M60AD - 60Ah", preco: 499.90, preco_de: 549.90, modelo: "Automotiva", estoque: 50, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 60Ah, alta performance e durabilidade. Indicada para veículos médios e com equipamentos eletrônicos."},
+	{id: 103, nome: "Moura M70AE - 70Ah", preco: 619.90, preco_de: 689.90, modelo: "Automotiva", estoque: 32, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 70Ah, excelente para veículos de grande porte, SUVs e picapes. Maior poder de arranque e resistência."},
+	{id: 101, nome: "Moura M40FD - 40Ah", preco: 349.90, preco_de: 389.90, modelo: "Automotiva", estoque: 50, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura 40Ah, ideal para carros populares com baixa demanda elétrica. Livre de manutenção, 18 meses de garantia."},
+	{id: 104, nome: "Moura Moto MA5-D - 5Ah", preco: 189.90, preco_de: 219.90, modelo: "Moto", estoque: 21, imagem_url: "https://cdn.shopify.com/s/files/1/0771/3115/3652/files/17303139164879-moura_pack_frontal_a-684b0da176fa5_1.png?v=1762392888", descricaoCompleta: "Bateria Moura para motos 5Ah, tecnologia AGM/VRLA. Ideal para motos de baixa cilindrada. Pronta para uso."},
+	{id: 105, nome: "Moura Moto MA9-E - 9Ah", preco: 279.90, preco_de: 319.90, modelo: "Moto", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura para motos 9Ah, maior capacidade e durabilidade. Indicada para motos de média e alta cilindrada."},
+	{id: 106, nome: "Moura Estacionária Clean 100Ah", preco: 1250.00, preco_de: 1350.00, modelo: "Estacionária", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura Estacionária 100Ah, para sistemas de energia solar, no-breaks e telecomunicações. Ciclo profundo e longa vida útil."},
+	{id: 107, nome: "Moura M48FD - 48Ah", preco: 399.90, preco_de: 439.90, modelo: "Automotiva", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura 48Ah, excelente custo-benefício para veículos compactos e sedans."},
+	{id: 108, nome: "Moura M80AD - 80Ah", preco: 750.00, preco_de: 820.00, modelo: "Automotiva", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura 80Ah, máxima potência para veículos com alta exigência elétrica."},
+	{id: 109, nome: "Moura Estacionária Clean 60Ah", preco: 890.00, preco_de: 950.00, modelo: "Estacionária", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura Estacionária 60Ah, ideal para no-breaks e sistemas de segurança."},
+	{id: 110, nome: "Moura Moto MA7-D - 7Ah", preco: 229.90, preco_de: 259.90, modelo: "Moto", estoque: 21, imagem_url: "https://i.imgur.com/M7q1z0Z.png", descricaoCompleta: "Bateria Moura para motos 7Ah, confiabilidade e desempenho para o dia a dia."},
+	]
+	
+	let carrinho=[];
+	let freteSelecionado = null; // Variável global para armazenar a opção de frete selecionada
+	const listaProdutosEl=document.getElementById('lista-produtos');
+	const contadorCarrinhoEl=document.getElementById('contador-carrinho');
+	const modalCarrinhoEl=document.getElementById('modal-carrinho');
+	const itensCarrinhoEl=document.getElementById('itens-carrinho');
+	const valorTotalEl=document.getElementById('valor-total');
+	const carrinhoVazioEl=document.getElementById('carrinho-vazio');
+	const formularioPedidoEl=document.getElementById('formulario-pedido');
+	const btnIniciarPedidoEl=document.getElementById('btn-iniciar-pedido');
+	const btnFinalizarWhatsAppEl=document.getElementById('finalizar-whatsapp');
+	const mensagemStatusEl=document.getElementById('mensagem-status');
+	const notificationSnackbarEl=document.getElementById('notification-snackbar');
+	const searchInputEl = document.getElementById('search-input'); 
+	const bannerSliderEl = document.getElementById('banner-slider'); 
+	
+	// Variáveis do Banner Slider
+	let currentSlide = 0;
+	const totalSlides = 3; 
+	
+	// Variáveis do Menu Mobile
+	const menuHamburguerEl = document.getElementById('menu-hamburguer');
+	const menuMobileContainerEl = document.getElementById('menu-mobile-container');
+	const submenuLinks = document.querySelectorAll('#menu-mobile .has-submenu > a');
+	
+	function showNotification(message) {
+	    notificationSnackbarEl.classList.remove('show');
+	    notificationSnackbarEl.innerHTML = message;
+	    notificationSnackbarEl.classList.add('show');
+	    
+	    setTimeout(() => {
+	        notificationSnackbarEl.classList.remove('show');
+	    }, 4000); 
+	}
+	
+	function startBannerSlider() {
+	    // A função de slider só precisa ser executada se o banner estiver visível
+	    if(window.innerWidth >= 1200) {
+	        setInterval(() => {
+	            currentSlide = (currentSlide + 1) % totalSlides;
+	            const offset = -currentSlide * 100;
+	            bannerSliderEl.style.transform = `translateX(${offset}%)`;
+	        }, 3000); 
+	    }
+	}
+	
+	function carregarProdutos(){
+	listaProdutosEl.innerHTML=catalogoPecas.map(p=>`
+	<div class="produto-card" data-id="${p.id}" data-nome="${p.nome.toLowerCase()}" data-modelo="${p.modelo.toLowerCase()}">
+	<img src="${p.imagem_url}" alt="${p.nome}">
+	<h4>${p.nome}</h4>
+	<p>Tipo: ${p.modelo}</p>
+	<div class="preco-container">
+		    ${p.preco_de ? `<span class="preco-de">De R$ ${p.preco_de.toFixed(2).replace('.',',')}</span>` : ''}
+		    <span class="preco-por">Por R$ ${p.preco.toFixed(2).replace('.',',')}</span>
+		</div>
+	<button class="btn-adicionar" data-id="${p.id}" data-nome="${p.nome}" data-preco="${p.preco}" data-modelo="${p.modelo}">
+	Adicionar ao Carrinho
+	</button>
+	</div>
+	`).join('');
+	document.querySelectorAll('.btn-adicionar').forEach(b=>b.addEventListener('click',adicionarAoCarrinho));
+	// Re-adiciona o listener para o modal de detalhes após carregar os produtos
+	adicionarListenersDetalheProduto();
+	}
+	
+	
+	// Função que filtra por marca, limpando a busca por texto
+	function filterByBrand(brand) {
+	    searchInputEl.value = ''; 
+	    filterProducts(brand); 
+	    // Fechar menu mobile se estiver aberto após clique
+	    if (window.innerWidth <= 768) {
+	         menuMobileContainerEl.classList.remove('show-menu');
+	    }
+	}
+	
+	// Função de filtro unificada (para busca por texto e marca)
+	function filterProducts(filterTermOrBrand = null) {
+	    const filterValue = filterTermOrBrand ? filterTermOrBrand.toLowerCase().trim() : searchInputEl.value.toLowerCase().trim();
+	    const cards = document.querySelectorAll('.produto-card');
+	
+	    cards.forEach(card => {
+	        const nome = card.dataset.nome;
+	        const modelo = card.dataset.modelo;
+	        
+	        if (filterValue === '') {
+	            card.classList.remove('hidden');
+	            return;
+	        }
+	
+	        // Filtra por nome, modelo (tipo de bateria) ou pela marca (Moura)
+	        if (nome.includes(filterValue) || modelo.includes(filterValue) || 'moura'.includes(filterValue)) {
+	            card.classList.remove('hidden');
+	        } else {
+	            card.classList.add('hidden');
+	        }
+	    });
+	}
+	
+	
+	function renderizarCarrinho(){
+	    // Lógica de reset do frete ao renderizar o carrinho SOMENTE se o carrinho estiver vazio
+	    const campoCep = document.getElementById('campo-cep');
+	    const enderecoInfo = document.getElementById('endereco-info');
+	    const opcoesFreteDiv = document.getElementById('opcoes-frete');
+	    const freteStatus = document.getElementById('frete-status');
+	    
+	    // Continua com a lógica original
+	
+		    
+		itensCarrinhoEl.innerHTML='';
+		let total=0;
+	if(carrinho.length===0){
+	carrinhoVazioEl.style.display='block';
+	// btnIniciarPedidoEl.disabled=true; // Removido pois agora é um link (<a>)
+	    // Reseta o frete se o carrinho estiver vazio
+	    freteSelecionado = null;
+	    if (campoCep) campoCep.value = '';
+	    if (enderecoInfo) enderecoInfo.textContent = '';
+	    if (opcoesFreteDiv) opcoesFreteDiv.style.display = 'none';
+	    if (freteStatus) freteStatus.textContent = '';
+	    const radios = document.getElementsByName('opcao-frete');
+	    radios.forEach(radio => radio.checked = false);
+	}else{
+	carrinhoVazioEl.style.display='none';
+	// btnIniciarPedidoEl.disabled=false; // Removido pois agora é um link (<a>)
+		carrinho.forEach(item=>{
+		const subtotal=item.preco*item.quantidade;
+		total+=subtotal;
+		const itemEl=document.createElement('div');
+		itemEl.classList.add('item-carrinho');
+		itemEl.innerHTML=`
+		<div class="item-info">
+		<img src="${item.imagem_url}" alt="${item.nome}" class="carrinho-img">
+		<span>${item.nome} (${item.modelo})</span>
+		</div>
+		<span>${item.quantidade}x</span>
+		<strong>R$ ${subtotal.toFixed(2).replace('.',',')}</strong>
+		<button class="btn-remover" data-id="${item.id}">&times;</button>
+		`;
+		itensCarrinhoEl.appendChild(itemEl);
+		});
+		itensCarrinhoEl.querySelectorAll('.btn-remover').forEach(b=>b.addEventListener('click',removerDoCarrinho));
+	}
+	valorTotalEl.textContent=`R$ ${total.toFixed(2).replace('.',',')}`;
+	contadorCarrinhoEl.textContent=carrinho.reduce((a,i)=>a+i.quantidade,0);
+	}
+	function adicionarAoCarrinho(e){
+		const botao = e.target.closest('.btn-adicionar');
+		if (!botao) return;
+		
+		// 1. Inicia o estado de carregamento
+		botao.classList.add('loading');
+		botao.textContent = ''; // Limpa o texto para mostrar o spinner
+		
+		// Simula o tempo de carregamento (1 segundo)
+		setTimeout(() => {
+		    const id=parseInt(botao.dataset.id);
+			    const itemProduto = catalogoPecas.find(p => p.id === id);
+			    if (!itemProduto) return; // Garante que o produto existe
+		    const nome=botao.dataset.nome;
+		    const preco=parseFloat(botao.dataset.preco);
+		    const modelo=botao.dataset.modelo;
+		
+		    const itemExistente=carrinho.find(i=>i.id===id);
+		    if(itemExistente){
+		        itemExistente.quantidade++;
+		    }else{
+		        carrinho.push({id,nome,preco,quantidade:1,modelo,imagem_url: itemProduto.imagem_url});
+		    }
+		    
+	// 2. Finaliza o carregamento e atualiza o carrinho
+			    renderizarCarrinho();
+			    // showNotification(`<i class="fas fa-check-circle"></i> ${nome} adicionado ao carrinho!`); // Linha removida/comentada conforme solicitado
+			    
+			    // NOVO: Abre o modal do carrinho automaticamente
+			    modalCarrinhoEl.style.display='block';
+			    formularioPedidoEl.style.display='none';
+			    // btnIniciarPedidoEl.style.display='block'; // Removido pois agora é um link (<a>) e o display: block está no style inline
+		    
+		    // 3. Restaura o botão
+		    botao.classList.remove('loading');
+		    botao.textContent = 'Adicionar ao Carrinho';
+		}, 1000); // Simulação de 1 segundo de carregamento
+		}
+	function removerDoCarrinho(e){
+	const id=parseInt(e.target.dataset.id);
+	const index=carrinho.findIndex(i=>i.id===id);
+	if(index!==-1){
+	const item=carrinho[index];
+	item.quantidade--;
+	if(item.quantidade<=0){
+	carrinho.splice(index,1);
+	}
+	}
+	renderizarCarrinho();
+	}
+	function finalizarPedidoWhatsApp(e){
+	e.preventDefault();
+	const clienteNome=document.getElementById('campo-nome').value.trim();
+	const clienteWhatsapp=document.getElementById('campo-whatsapp').value.replace(/[^0-9]/g,'');
+	
+	if (!freteSelecionado) {
+	    mensagemStatusEl.style.color='red';
+	    mensagemStatusEl.textContent='Por favor, calcule o frete e selecione uma opção de envio.';
+	    return;
+	}
+	
+	if(!clienteNome||clienteWhatsapp.length<10){
+	mensagemStatusEl.style.color='red';
+	mensagemStatusEl.textContent='Preencha seu nome e um número de WhatsApp válido (com DDD).';
+	return;
+	}
+	const valorTotalItens=carrinho.reduce((a,i)=>a+(i.preco*i.quantidade),0);
+	const valorFrete = freteSelecionado ? parseFloat(freteSelecionado.valor) : 0;
+	const valorTotal = valorTotalItens + valorFrete;
+	const itensMensagem=carrinho.map((i,idx)=>
+	`*${idx+1}.* ${i.nome} (${i.modelo})\n    *Qtde:* ${i.quantidade} | *Subtotal:* R$ ${(i.preco*i.quantidade).toFixed(2).replace('.',',')}`
+	).join('\n');
+	const mensagemWhatsapp=encodeURIComponent(
+	`*NOVO PEDIDO DE BATERIAS MOURA (VIA SITE)*\n\n`+
+	`*Cliente:* ${clienteNome}\n`+
+	`*WhatsApp:* ${clienteWhatsapp}\n\n`+
+	`*ITENS DO PEDIDO:*\n${itensMensagem}\n\n`+
+	`*Frete Selecionado:* ${freteSelecionado.descricao} (R$ ${valorFrete.toFixed(2).replace('.',',')})\n`+
+	`*Endereço de Entrega:* ${document.getElementById('endereco-info').textContent}\n\n`+
+	`*TOTAL GERAL ESTIMADO:* R$ ${valorTotal.toFixed(2).replace('.',',')}\n\n`+
+	`*Atenção:* Por favor, confirme o estoque, o valor e calcule o frete para o cliente.`
+	);
+	const numeroAtendente='5511960720059';
+	const linkWhatsApp=`https://api.whatsapp.com/send?phone=${numeroAtendente}&text=${mensagemWhatsapp}`;
+	mensagemStatusEl.style.color='green';
+	mensagemStatusEl.textContent='Pedido pronto! Abrindo o WhatsApp em instantes...';
+	btnFinalizarWhatsAppEl.disabled=true;
+	setTimeout(()=>{
+	window.open(linkWhatsApp,'_blank');
+	carrinho=[];
+	renderizarCarrinho();
+	modalCarrinhoEl.style.display='none';
+	btnFinalizarWhatsAppEl.disabled=false;
+	document.getElementById('campo-nome').value='';
+	document.getElementById('campo-whatsapp').value='';
+	mensagemStatusEl.textContent='';
+	},2000);
+	}
+	
+	// ADICIONADO: Funções para o Modal de Detalhes do Produto
+	
+	function fecharDetalhesProdutoModal() {
+	    document.getElementById('detalhes-produto-modal').style.display = 'none';
+	}
+	
+	function abrirDetalhesProdutoModal(produtoId) {
+	    // Busca o produto no catálogo usando o ID
+	    const produto = catalogoPecas.find(p => p.id === produtoId);
+	
+	    if (produto) {
+	        const modalContentBody = document.getElementById('detalhes-produto-body');
+	        
+	        // Cria o HTML de detalhes do produto
+	        modalContentBody.innerHTML = `
+	            <div style="text-align: center; margin-bottom: 20px;">
+	                <img src="${produto.imagem_url}" alt="${produto.nome}" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 5px;">
+	            </div>
+	            <h4 style="color: var(--azul-principal); font-size: 1.5em; margin-bottom: 5px;">${produto.nome}</h4>
+	            <p style="color: #666; margin-bottom: 15px;">Tipo: ${produto.modelo}</p>
+	            <strong style="font-size: 1.6em; color: var(--vermelho-preco); display: block; margin-bottom: 20px;">R$ ${produto.preco.toFixed(2).replace('.', ',')}</strong>
+	            
+	            <h5 style="color: var(--azul-principal); margin-bottom: 10px;">Descrição Detalhada:</h5>
+	            <p style="margin-bottom: 20px; line-height: 1.5; font-size: 0.95em;">${produto.descricaoCompleta}</p>
+	            
+	            <button class="btn-adicionar" data-id="${produto.id}" data-nome="${produto.nome}" data-preco="${produto.preco}" data-modelo="${produto.modelo}" style="margin-top: 10px;" onclick="adicionarAoCarrinho(event); setTimeout(() => fecharDetalhesProdutoModal(), 1000);">
+	                <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+	            </button>
+	        `;
+	
+	        document.getElementById('detalhes-produto-modal').style.display = 'block';
+	    }
+	}
+	
+	function adicionarListenersDetalheProduto() {
+	    // Remove listeners antigos para evitar duplicação
+	    document.querySelectorAll('.produto-card').forEach(card => {
+	        card.removeEventListener('click', handleCardClick);
+	    });
+	
+	    // Adiciona o evento de clique a todos os cartões de produto
+	    document.querySelectorAll('.produto-card').forEach(card => {
+	        card.addEventListener('click', handleCardClick);
+	    });
+	    
+	    // Permite fechar o modal ao clicar fora dele (no overlay)
+	    const modal = document.getElementById('detalhes-produto-modal');
+	    modal.addEventListener('click', function(event) {
+	        if (event.target === modal) {
+	            fecharDetalhesProdutoModal();
+	        }
+	    });
+	
+	    // Reutiliza o listener para fechar o modal ao clicar no X
+	    document.querySelectorAll('#detalhes-produto-modal .fechar-modal').forEach(span => {
+	        span.onclick = fecharDetalhesProdutoModal;
+	    });
+	}
+	
+	function handleCardClick(event) {
+	    // Verifica se o clique não foi no botão "Adicionar ao Carrinho"
+	    if (!event.target.classList.contains('btn-adicionar') && !event.target.closest('.btn-adicionar')) {
+	        const produtoId = parseInt(this.getAttribute('data-id'));
+	        if (!isNaN(produtoId)) {
+	            abrirDetalhesProdutoModal(produtoId);
+	        }
+	    }
+	}
+	// FIM ADICIONADO: Funções para o Modal de Detalhes do Produto
+	
+	
+	// --- INÍCIO: Lógica de Cálculo de Frete ---
+	const campoCep = document.getElementById('campo-cep');
+	const btnCalcularFrete = document.getElementById('btn-calcular-frete');
+	const enderecoInfo = document.getElementById('endereco-info');
+	const opcoesFreteDiv = document.getElementById('opcoes-frete');
+	const freteStatus = document.getElementById('frete-status');
+	
+	// Máscara para CEP (apenas números)
+	campoCep.addEventListener('input', function(e) {
+	    e.target.value = e.target.value.replace(/\D/g, '').substring(0, 8);
+	});
+	
+	btnCalcularFrete.addEventListener('click', async function() {
+	    const cep = campoCep.value;
+	    if (cep.length !== 8) {
+	        enderecoInfo.textContent = 'CEP inválido. Digite 8 números.';
+	        opcoesFreteDiv.style.display = 'none';
+	        freteStatus.textContent = '';
+	        freteSelecionado = null;
+	        renderizarCarrinho();
+	        return;
 	    }
 	    
-// 2. Finaliza o carregamento e atualiza o carrinho
-		    renderizarCarrinho();
-		    // showNotification(`<i class="fas fa-check-circle"></i> ${nome} adicionado ao carrinho!`); // Linha removida/comentada conforme solicitado
-		    
-		    // NOVO: Abre o modal do carrinho automaticamente
-		    modalCarrinhoEl.style.display='block';
-		    formularioPedidoEl.style.display='none';
-		    btnIniciarPedidoEl.style.display='block';
+	    // Adiciona o estado de loading
+	btnCalcularFrete.classList.add('loading');
+	btnCalcularFrete.textContent = '';
+	enderecoInfo.textContent = 'Buscando endereço...';
+	opcoesFreteDiv.style.display = 'none';
+	freteStatus.textContent = '';
+	freteSelecionado = null;
+	// Garante que o total é atualizado para 0 antes de calcular o frete
+	valorTotalEl.textContent=`R$ ${carrinho.reduce((a,i)=>a+(i.preco*i.quantidade),0).toFixed(2).replace('.',',')}`;
 	    
-	    // 3. Restaura o botão
-	    botao.classList.remove('loading');
-	    botao.textContent = 'Adicionar ao Carrinho';
-	}, 1000); // Simulação de 1 segundo de carregamento
+	    try {
+	        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+	        const data = await response.json();
+	        
+	        if (data.erro) {
+	            enderecoInfo.textContent = 'CEP não encontrado.';
+	            freteStatus.textContent = 'Não foi possível calcular o frete para este CEP.';
+	        } else {
+	            enderecoInfo.textContent = `${data.logradouro}, ${data.bairro} - ${data.localidade}/${data.uf}`;
+	            opcoesFreteDiv.style.display = 'block';
+	            freteStatus.textContent = 'Selecione uma opção de envio:';
+	            
+	            // Limpa qualquer seleção anterior
+	            const radios = document.getElementsByName('opcao-frete');
+	            radios.forEach(radio => radio.checked = false);
+	        }
+	    } catch (error) {
+	        console.error('Erro ao buscar CEP:', error);
+	        enderecoInfo.textContent = 'Erro ao conectar com o serviço de CEP.';
+	        freteStatus.textContent = 'Não foi possível calcular o frete.';
+	    } finally {
+	        // Remove o estado de loading
+	        btnCalcularFrete.classList.remove('loading');
+	        btnCalcularFrete.textContent = 'Calcular';
+	        // Não chama renderizarCarrinho() aqui, pois a seleção do frete fará isso
+	        // Apenas atualiza o total para refletir o valor do carrinho sem frete, caso a busca falhe
+	        if (!freteSelecionado) {
+	            valorTotalEl.textContent=`R$ ${carrinho.reduce((a,i)=>a+(i.preco*i.quantidade),0).toFixed(2).replace('.',',')}`;
+	        }
+	    }
+	});
+	
+	// Lógica para seleção do frete
+	opcoesFreteDiv.addEventListener('change', function(e) {
+	    if (e.target.name === 'opcao-frete') {
+	        freteSelecionado = {
+	            valor: e.target.value,
+	            descricao: e.target.dataset.descricao,
+	            prazo: e.target.dataset.prazo
+	        };
+	        freteStatus.textContent = `Opção selecionada: ${freteSelecionado.descricao} (R$ ${freteSelecionado.valor.replace('.', ',')})`;
+	        
+	        // Atualiza o total sem chamar renderizarCarrinho() para evitar loop de reset
+	        const totalItens = carrinho.reduce((a,i)=>a+(i.preco*i.quantidade),0);
+	        valorTotalEl.textContent=`R$ ${(totalItens + parseFloat(freteSelecionado.valor)).toFixed(2).replace('.',',')}`;
+	    }
+	});
+	
+	// --- FIM: Lógica de Cálculo de Frete ---
+	
+	// Inicialização de Listeners
+	document.getElementById('abrir-carrinho').addEventListener('click',()=>{
+	renderizarCarrinho(); // Garante que o carrinho está atualizado antes de abrir
+	modalCarrinhoEl.style.display='block';
+	formularioPedidoEl.style.display='none';
+	// btnIniciarPedidoEl.style.display='block'; // Removido pois agora é um link (<a>) e o display: block está no style inline
+	});
+	document.querySelector('.fechar-modal').addEventListener('click',()=>{
+	modalCarrinhoEl.style.display='none';
+	});
+	window.addEventListener('click',e=>{
+	if(e.target===modalCarrinhoEl){
+	modalCarrinhoEl.style.display='none';
 	}
-function removerDoCarrinho(e){
-const id=parseInt(e.target.dataset.id);
-const index=carrinho.findIndex(i=>i.id===id);
-if(index!==-1){
-const item=carrinho[index];
-item.quantidade--;
-if(item.quantidade<=0){
-carrinho.splice(index,1);
+	});
+	// btnIniciarPedidoEl.addEventListener('click',()=>{ // Removido pois agora é um link (<a>) e não precisa de listener
+	if(carrinho.length>0){
+	    if (!freteSelecionado) {
+	        document.getElementById('frete-status').textContent = 'Por favor, calcule o frete e selecione uma opção de envio.';
+	        return;
+	    }
+	    document.getElementById('frete-status').textContent = ''; // Limpa a mensagem de erro
+	formularioPedidoEl.style.display='block';
+	// btnIniciarPedidoEl.style.display='none'; // Removido pois agora é um link (<a>) e o display: block está no style inline
+	mensagemStatusEl.textContent='';
+	}else{
+	alert('Seu carrinho está vazio. Adicione baterias primeiro!');
+	}
+	});
+	btnFinalizarWhatsAppEl.addEventListener('click',finalizarPedidoWhatsApp);
+	searchInputEl.addEventListener('keyup', () => filterProducts(searchInputEl.value)); 
+	
+	
+	// --- JS PARA MENU MOBILE (Novo) ---
+	
+	// 1. Função de Toggle do Menu Mobile
+	menuHamburguerEl.addEventListener('click', () => {
+	    menuMobileContainerEl.classList.toggle('show-menu');
+	});
+	
+	// 2. Fechar o Menu Mobile ao clicar fora (simples)
+	document.addEventListener('click', (e) => {
+	    if (menuMobileContainerEl.classList.contains('show-menu') && 
+	        !menuMobileContainerEl.contains(e.target) && 
+	        e.target !== menuHamburguerEl && 
+	        !menuHamburguerEl.contains(e.target)) {
+	        
+	        menuMobileContainerEl.classList.remove('show-menu');
+	    }
+	});
+	
+	// 3. Função de Toggle dos Sub-Menus no Mobile (clique)
+	submenuLinks.forEach(link => {
+	    link.addEventListener('click', (e) => {
+	        // Verifica se a tela é mobile
+	        if (window.innerWidth <= 768) {
+	            e.preventDefault(); 
+	            const submenu = link.nextElementSibling;
+	            
+	            // Toggle do submenu clicado
+	            if (submenu && submenu.classList.contains('submenu')) {
+	                if (submenu.style.display === 'block') {
+	                    submenu.style.display = 'none';
+	                    link.querySelector('.fa-chevron-down').style.transform = 'none';
+	                } else {
+	                    // Fecha todos os outros submenus abertos
+	                    document.querySelectorAll('#menu-mobile .submenu').forEach(sub => {
+	                        if (sub !== submenu) {
+	                            sub.style.display = 'none';
+	                        }
+	                    });
+	                    
+	                    submenu.style.display = 'block';
+	                    link.querySelector('.fa-chevron-down').style.transform = 'rotate(180deg)';
+	                }
+	            }
+	        }
+	    });
+	});
+	
+	
+	// Inicializa o site
+	carregarProdutos();
+	renderizarCarrinho();
+	startBannerSlider();
+	
+	// ADICIONADO: Inicializa os listeners para o clique no produto
+	// Já está sendo chamado dentro de carregarProdutos() para garantir que os elementos existam.
+	</script>
+	</body>
+	</html>
+
+<style>
+/* --- MELHORIAS DE DESIGN DO CARRINHO --- */
+.modal-content {
+    max-width: 550px; /* Aumenta um pouco a largura do modal */
+    border-radius: 10px;
 }
-}
-renderizarCarrinho();
-}
-function finalizarPedidoWhatsApp(e){
-	e.preventDefault();
-	// Redirecionamento direto conforme solicitado pelo usuário
-	window.location.href = 'https://profissionale928-collab.github.io/destino';
-	// O restante do código original foi comentado/removido para implementar o redirecionamento direto.
-	// O código original era:
+
+.modal-content h4 {
+    font-size: 1.5em;
+    color: var(--azul-principal);
+    border-bottom: 2px solid var(--azul-claro);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-// ADICIONADO: Funções para o Modal de Detalhes do Produto
-
-function fecharDetalhesProdutoModal() {
-    document.getElementById('detalhes-produto-modal').style.display = 'none';
+.item-carrinho {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #fdfdfd;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-function abrirDetalhesProdutoModal(produtoId) {
-    // Busca o produto no catálogo usando o ID
-    const produto = catalogoPecas.find(p => p.id === produtoId);
-
-    if (produto) {
-        const modalContentBody = document.getElementById('detalhes-produto-body');
-        
-        // Cria o HTML de detalhes do produto
-        modalContentBody.innerHTML = `
-            <div style="text-align: center; margin-bottom: 20px;">
-                <img src="${produto.imagem_url}" alt="${produto.nome}" style="max-width: 100%; max-height: 250px; object-fit: contain; border-radius: 5px;">
-            </div>
-            <h4 style="color: var(--azul-principal); font-size: 1.5em; margin-bottom: 5px;">${produto.nome}</h4>
-            <p style="color: #666; margin-bottom: 15px;">Tipo: ${produto.modelo}</p>
-            <strong style="font-size: 1.6em; color: var(--vermelho-preco); display: block; margin-bottom: 20px;">R$ ${produto.preco.toFixed(2).replace('.', ',')}</strong>
-            
-            <h5 style="color: var(--azul-principal); margin-bottom: 10px;">Descrição Detalhada:</h5>
-            <p style="margin-bottom: 20px; line-height: 1.5; font-size: 0.95em;">${produto.descricaoCompleta}</p>
-            
-            <button class="btn-adicionar" data-id="${produto.id}" data-nome="${produto.nome}" data-preco="${produto.preco}" data-modelo="${produto.modelo}" style="margin-top: 10px;" onclick="adicionarAoCarrinho(event); setTimeout(() => fecharDetalhesProdutoModal(), 1000);">
-                <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
-            </button>
-        `;
-
-        document.getElementById('detalhes-produto-modal').style.display = 'block';
-    }
+.item-carrinho:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
 }
 
-function adicionarListenersDetalheProduto() {
-    // Remove listeners antigos para evitar duplicação
-    document.querySelectorAll('.produto-card').forEach(card => {
-        card.removeEventListener('click', handleCardClick);
-    });
-
-    // Adiciona o evento de clique a todos os cartões de produto
-    document.querySelectorAll('.produto-card').forEach(card => {
-        card.addEventListener('click', handleCardClick);
-    });
-    
-    // Permite fechar o modal ao clicar fora dele (no overlay)
-    const modal = document.getElementById('detalhes-produto-modal');
-    modal.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            fecharDetalhesProdutoModal();
-        }
-    });
-
-    // Reutiliza o listener para fechar o modal ao clicar no X
-    document.querySelectorAll('#detalhes-produto-modal .fechar-modal').forEach(span => {
-        span.onclick = fecharDetalhesProdutoModal;
-    });
+.carrinho-img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    margin-right: 15px;
+    border-radius: 5px;
+    border: 1px solid #eee;
 }
 
-function handleCardClick(event) {
-    // Verifica se o clique não foi no botão "Adicionar ao Carrinho"
-    if (!event.target.classList.contains('btn-adicionar') && !event.target.closest('.btn-adicionar')) {
-        const produtoId = parseInt(this.getAttribute('data-id'));
-        if (!isNaN(produtoId)) {
-            abrirDetalhesProdutoModal(produtoId);
-        }
-    }
+.item-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-// FIM ADICIONADO: Funções para o Modal de Detalhes do Produto
 
-
-// Inicialização de Listeners
-document.getElementById('abrir-carrinho').addEventListener('click',()=>{
-modalCarrinhoEl.style.display='block';
-formularioPedidoEl.style.display='none';
-btnIniciarPedidoEl.style.display='block';
-});
-document.querySelector('.fechar-modal').addEventListener('click',()=>{
-modalCarrinhoEl.style.display='none';
-});
-window.addEventListener('click',e=>{
-if(e.target===modalCarrinhoEl){
-modalCarrinhoEl.style.display='none';
+.item-info span:first-child {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.05em;
+    margin-bottom: 5px;
 }
-});
-btnIniciarPedidoEl.addEventListener('click',()=>{
-if(carrinho.length>0){
-formularioPedidoEl.style.display='block';
-btnIniciarPedidoEl.style.display='none';
-mensagemStatusEl.textContent='';
-}else{
-alert('Seu carrinho está vazio. Adicione baterias primeiro!');
+
+.item-carrinho .quantidade-subtotal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
 }
-});
-btnFinalizarWhatsAppEl.addEventListener('click',finalizarPedidoWhatsApp);
-searchInputEl.addEventListener('keyup', () => filterProducts(searchInputEl.value)); 
 
+.item-carrinho .quantidade-subtotal span {
+    color: #666;
+    font-size: 0.9em;
+}
 
-// --- JS PARA MENU MOBILE (Novo) ---
+.item-carrinho .quantidade-subtotal strong {
+    color: var(--vermelho-preco);
+    font-size: 1.15em;
+    margin-top: 5px;
+}
 
-// 1. Função de Toggle do Menu Mobile
-menuHamburguerEl.addEventListener('click', () => {
-    menuMobileContainerEl.classList.toggle('show-menu');
-});
+.btn-remover {
+    background: transparent;
+    border: none;
+    color: #aaa;
+    font-size: 1.6em;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 0 5px 0 15px;
+}
 
-// 2. Fechar o Menu Mobile ao clicar fora (simples)
-document.addEventListener('click', (e) => {
-    if (menuMobileContainerEl.classList.contains('show-menu') && 
-        !menuMobileContainerEl.contains(e.target) && 
-        e.target !== menuHamburguerEl && 
-        !menuHamburguerEl.contains(e.target)) {
-        
-        menuMobileContainerEl.classList.remove('show-menu');
-    }
-});
+.btn-remover:hover {
+    color: var(--vermelho-preco);
+}
 
-// 3. Função de Toggle dos Sub-Menus no Mobile (clique)
-submenuLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        // Verifica se a tela é mobile
-        if (window.innerWidth <= 768) {
-            e.preventDefault(); 
-            const submenu = link.nextElementSibling;
-            
-            // Toggle do submenu clicado
-            if (submenu && submenu.classList.contains('submenu')) {
-                if (submenu.style.display === 'block') {
-                    submenu.style.display = 'none';
-                    link.querySelector('.fa-chevron-down').style.transform = 'none';
-                } else {
-                    // Fecha todos os outros submenus abertos
-                    document.querySelectorAll('#menu-mobile .submenu').forEach(sub => {
-                        if (sub !== submenu) {
-                            sub.style.display = 'none';
-                        }
-                    });
-                    
-                    submenu.style.display = 'block';
-                    link.querySelector('.fa-chevron-down').style.transform = 'rotate(180deg)';
-                }
-            }
-        }
-    });
-});
+.resumo-total {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid var(--azul-principal);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3em;
+}
 
+.resumo-total strong {
+    color: var(--azul-principal);
+}
 
-// Inicializa o site
-carregarProdutos();
-renderizarCarrinho();
-startBannerSlider();
+/* --- CSS PARA COMPARAÇÃO DE PREÇOS --- */
+.preco-container {
+    min-height: 50px; /* Garante altura mínima para alinhamento */
+    margin-bottom: 15px;
+}
 
-// ADICIONADO: Inicializa os listeners para o clique no produto
-// Já está sendo chamado dentro de carregarProdutos() para garantir que os elementos existam.
-</script>
-</body>
-</html>
+.preco-de {
+    font-size: 0.9em;
+    color: #888;
+    text-decoration: line-through;
+    margin-right: 8px;
+}
+
+.preco-por {
+    font-size: 1.5em;
+    color: var(--vermelho-preco);
+    font-weight: 700;
+}
+</style>
+</style>
