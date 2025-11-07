@@ -1220,6 +1220,7 @@ body{background-color:var(--cinza-fundo);line-height:1.6}
 	renderizarCarrinho();
 		}
 function finalizarPedido(e){
+    e.preventDefault();
     console.log('Finalizar Pedido acionado.');
 		
 		// 1. Verifica se o carrinho está vazio antes de tentar finalizar
